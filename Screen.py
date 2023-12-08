@@ -7,8 +7,9 @@ class Screen():
         self.width = width
         self.height = height
         self.screen = None
-        self.grid_size = [10,10]
+        self.grid_size = [20,20]
         self.grid = [] #This is the list with the objects
+        self.colors = {'background' : 'black', 'alive' : 'white', 'dead': 'black'}
 
     def draw_screen(self):
         self.screen = pygame.display.set_mode((self.width,self.height))
@@ -17,7 +18,7 @@ class Screen():
         for x in range(self.grid_size[0]):
             for y in range(self.grid_size[1]):
                 tile = Tile(self.get_tile_width(), self.get_tile_height() , x , y)
-                tile.draw_tile(self.screen, 'purple')
+                tile.draw_tile(self.screen, self.colors['background'])
                 tile.draw_lines(self.screen, 'white')
                 self.grid.append(tile)
 
@@ -25,7 +26,8 @@ class Screen():
         for tile in self.grid:
             print("Width: ", tile.width,
                    "Height: ", tile.height,
-                    "Cordinates: ", tile.cordinates)
+                    "Cordinates: ", tile.cordinates,
+                    "Is Alive: ", tile.is_alive)
     
     def search_in_grid_by_cordinates(self, user_cords):
         for tile in self.grid:
@@ -47,11 +49,18 @@ class Screen():
         tile = self.search_in_grid_by_cordinates(tiles_tuple)
         
         if button == 1:
-            tile.draw_tile(self.screen, 'white')
-        elif button == 3:
-            tile.draw_tile(self.screen, 'red')
+            is_alive = True
+            tile.draw_tile(self.screen, self.colors['alive'])
+        elif button == 3 :
+            is_alive = False
+            tile.draw_tile(self.screen, self.colors['dead'])
 
+        tile.set_alive_state(is_alive)
 
+        self.search_in_grid()
+        
+
+        #Fix the "Draw Lines"
 
         return tiles_tuple
 
