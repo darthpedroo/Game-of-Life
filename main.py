@@ -3,11 +3,11 @@ from Screen import Screen
 
 pygame.init()
 
-screen = Screen(1280,720)
+screen = Screen(1000,680)
 screen.draw_screen()
 screen.draw_grid()
 
-screen.search_in_grid()
+#screen.search_in_grid()
 
 clock = pygame.time.Clock()
 
@@ -22,8 +22,6 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             raise SystemExit
-
-
 
     pygame.display.flip()  
     clock.tick(60)         
